@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kzerk.shopppinglist.R
-import com.kzerk.shopppinglist.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 		setupRecycleView()
 		viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 		viewModel.shopList.observe(this){
-			adapterSL.shopList = it
+			adapterSL.submitList(it)
 		}
 	}
 
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 			}
 
 			override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-				val item = adapterSL.shopList[viewHolder.adapterPosition]
+				val item = adapterSL.currentList[viewHolder.adapterPosition]
 				viewModel.removeItem(item)
 			}
 		}
